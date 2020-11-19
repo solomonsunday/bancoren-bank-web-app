@@ -1,0 +1,13 @@
+.field-inline-block {
+    display: inline-block;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.date-field {
+    text-align: center;
+}
+
+.errorborder {
+    border-color:coral;
+}
