@@ -81,8 +81,22 @@
                                <div class="form-inner">
                                    <div class="alert alert-success" style="display:none;"></div>
 
-                                   <form action="{{route('upload.image')}}" enctype="multipart/form-data">
-                                        <input type="file">
+                                   @if (session('success'))
+                                       <div class="alert alert-success">
+                                        {{ session('success') }}
+                                        </div>
+                                   @endif
+
+                                   @if (session('danger'))
+                                        <div class="alert alert-danger">
+                                            {{ session('danger') }}  
+
+                                        </div>
+                                    @endif
+
+                                   <form action="{{route('upload.image')}}" method="POST" enctype="multipart/form-data">
+                                        <input type="file" name="image">
+                                        @csrf
                                         {{-- <p id="imagePreview">Drag your file here or click in this area</p> --}}
 
                                         <button type="submit" style="margin-top:30px;">Upload</button>

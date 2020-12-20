@@ -114,10 +114,10 @@
                                     <div class="collapse navbar-collapse" id="navbar-example">
                                         <div class="main-menu">
                                             <ul class="nav navbar-nav navbar-right">
-                                                <li><a href="{{route('/')}}" class="pages" href="index.html">Home</a>
+                                                <li><a href="{{route('/')}}" class="pages" >Home</a>
 
                                                 </li>
-                                                <li><a href="about.html">About us</a></li>
+                                                <li><a href="{{route('about')}}">About us</a></li>
 
                                                 @if (Auth::check())
                                                      <li><a class="pages" href="{{route('home')}}">Dashboard</a></li>
@@ -127,7 +127,7 @@
                                                
                                                 
                                                
-                                                <li><a href="contact.html">contacts</a></li>
+                                                <li><a href="#">contacts</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -160,11 +160,15 @@
                                     <li><a href="{{route('/')}}" class="pages">Home</a>
 
                                     </li>
-                                    <li><a href="about.html">About us</a></li>
-                                        <li><a href="about.html">Open Account</a></li>
+                                    <li><a href="{{route('about')}}">About us</a></li>
+                                        <li><a href="{{route('open.account')}}">Open Account</a></li>
                                     
-                                    <li><a class="pages" href="#">Dashboard</a></li>
-                                    <li><a href="contact.html">contacts</a></li>
+                                @if (Auth::check())
+                                    <li><a class="pages" href="{{route('home')}}">Dashboard</a></li>
+                                @else
+                                     <li><a href="{{route('open.accountForm')}}">Open Account</a></li>
+                                @endif
+                                    <li><a href="#">contacts</a></li>
                                 </ul>
                             </nav>
                         </div>
@@ -207,7 +211,7 @@
                                             <div class="amount-content">
                                                 <a class="edit-icon" href="{{route('upload.imageform')}}"><i
                                                     class="ti-pencil-alt"></i></a>
-                                                <img src="{{asset('assets/img/about/user.png')}}" alt="">
+                                                <img src="{{asset("userImage/".Auth::user()->image)}}" alt="" style="width:90px; heigth:80px;">
                                                 <span class="pro-name">{{Auth::user()->is_verified==1 ? "Good to have you back":"Welcome"}} {{Auth::user()->first_name}}</span>
                                             </div>
                                              
@@ -241,7 +245,7 @@
                                 <div class="single-dash-head">
                                     <div class="dashboard-amount">
                                         <div class="amount-content">
-                                            <a class="edit-icon" href="a-card-number.html"><i
+                                            <a class="edit-icon" href="{{route('profile')}}"><i
                                                     class="ti-pencil-alt"></i></a>
                                             <i class="flaticon-050-user_profile"></i>
                                             <span class="pro-name">Profile</span>

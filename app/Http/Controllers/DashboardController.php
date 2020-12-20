@@ -63,4 +63,60 @@ class DashboardController extends Controller
             'account_type'=> $account_type->name
         ]);
     }
+
+
+    public function profile()
+    {
+        $authuser  = Auth::user();
+
+        
+        $user_balance = $this->userLogic->user_ac_balance($authuser->id);
+        $customer_details = $this->details->findItem(['user_id'=> $authuser->id]);
+        return view('Dashboard.profile', [
+            'ac_balance'=> $user_balance ?? 0,
+            'authuser'=> $authuser,
+            'details'=> $customer_details
+        ]);
+    }
+
+    public function updateProfile(Request $request, $id)
+    {
+        //$user = Auth::user();
+
+        $request->validate([
+            'first_name'=> 'required|string',
+            'last_name'=> 'required|string',
+            'email'=> "required|unique:users,email,{$id}",
+            'address'=> 'required',
+            'phone'=> 'required',
+            'occupation'=> 'required'
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+
+            $this->userLogic->updateItem(['id' => $id], [
+                'first_name' => $request->get('first_name'),
+                'last_name' => $request->get('last_name'),
+                'email' => $request->get('email')
+            ]);
+
+            DB::table('customer_details')->where('user_id', $id)->update([
+                'contact' => $request->get('phone'),
+                'occupation' => $request->get('occupation')
+            ]);
+            
+            DB::commit();
+
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            return redirect()->back()->with('danger', 'Profile not updated');
+        }
+       
+
+
+        return redirect()->back()->with('success', 'Profile Updated successfully');
+
+    }
 }

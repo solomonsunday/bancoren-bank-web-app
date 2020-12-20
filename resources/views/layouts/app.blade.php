@@ -126,7 +126,7 @@
                                                 <li><a href="{{route('/')}}" class="pages" href="index.html">Home</a>
 
                                                 </li>
-                                                <li><a href="about.html">About us</a></li>
+                                                <li><a href="{{route('about')}}">About us</a></li>
 
                                                 @if (Auth::check())
                                                      <li><a class="pages" href="{{route('home')}}">Dashboard</a></li>
@@ -136,7 +136,7 @@
                                                
                                                 
                                                
-                                                <li><a href="contact.html">contacts</a></li>
+                                                <li><a href="#">contacts</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -169,11 +169,15 @@
                                     <li><a href="{{route('/')}}" class="pages">Home</a>
 
                                     </li>
-                                    <li><a href="about.html">About us</a></li>
-                                        <li><a href="about.html">Open Account</a></li>
+                                    <li><a href="{{route('about')}}">About us</a></li>
+                                        {{-- <li><a href="{{route('open.account')}}">Open Account</a></li> --}}
                                     
-                                    <li><a class="pages" href="#">Dashboard</a></li>
-                                    <li><a href="contact.html">contacts</a></li>
+                                     @if (Auth::check())
+                                            <li><a class="pages" href="{{route('home')}}">Dashboard</a></li>
+                                    @else
+                                            <li><a href="{{route('open.accountForm')}}">Open Account</a></li>
+                                    @endif
+                                    <li><a href="#">contacts</a></li>
                                 </ul>
                             </nav>
                         </div>

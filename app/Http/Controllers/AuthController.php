@@ -62,6 +62,12 @@ class AuthController extends Controller
 
         if(Auth::attempt(['email'=>$request->get('email'), 'password'=> $request->get('password')])){
             $user = User::where('email', $request->get('email'))->first();
+
+             if($user->status == 0){
+               return $this->sendBadRequestResponse('Access Denied');
+            }
+         
+
             Auth::login($user);
             $intended_url = Redirect::intended("home")->getTargetUrl();
             return $this->sendSuccessResponse("Login Success", [

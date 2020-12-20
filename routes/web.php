@@ -17,6 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 })->name('/');
 
+Route::get('/about', function() {
+    return view('about');
+})->name('about'); 
+
 
 Route::group(['middleware'=> 'guest'], function() {
 
@@ -64,5 +68,8 @@ Route::group(['middleware'=> 'auth'], function() {
 
     Route::get('setting/upload-image', 'SettingController@uploadImageForm')->name('upload.imageform');
     Route::post('setting/upload', 'SettingController@uploadImage')->name('upload.image');
+
+    Route::get('/profile', 'DashboardController@profile')->name('profile');
+    Route::post('/update/profile/{id}', 'DashboardController@updateProfile')->name('update.profile');
  
 });

@@ -88,13 +88,31 @@ class SettingController extends Controller
 
     public function uploadImage(Request $request)
     {
+       
         $validate = Validator::make($request->all(), [
-            'image'=> 'required|image|mimes:png,jpg'
+            'image'=> 'required|image|mimes:png,jpg,jpeg'
         ]);
 
         if($validate->fails()){
             return $this->sendBadRequestResponse($validate->errors());
         }
+
+        $filename = time() . '.' . $request->image->getClientOriginalName();
+
+        $user = Auth::user();
+
+        $update = $this->userLogic->updateItem(['id'=> $user->id], [
+            'image'=> $filename
+        ]);
+
+        if($update){
+            $request->image->move(public_path('userImage'), $filename);
+            return redirect()->back()->with('success', 'Image uploaded successfully');
+        }else{
+            return redirect()->back()->with('danger', 'Image not updated');
+        }
+
+
 
 
     }

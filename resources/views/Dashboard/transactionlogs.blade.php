@@ -33,16 +33,16 @@
                                                 </thead>
                                                 <tbody>
                                                     @foreach ($logs as $transaction)
-                                                        <td>{{$transaction->created_at}}</td>
+                                                    <tr>
+                                                          <td>{{$transaction->created_at}}</td>
                                                         <td>{{$transaction->account_name}}</td>
                                                         <td>{{$transaction->type_name}}</td>
-                                                        @if ($transaction->type_name == "Debit")
-                                                            <td>{{$transaction->account_number}}</td>
-                                                        @else
-                                                            <td></td>
-                                                        @endif
+                                                        <td>{{$transaction->account_number}}</td>
+                                                        
                                                         <td>{{$transaction->amount}}</td>
                                                         <td>{{$transaction->balance}}</td>
+                                                    </tr>
+                                                      
                                                     @endforeach
                                                     
                                                 </tbody>
