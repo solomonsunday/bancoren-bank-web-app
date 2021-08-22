@@ -33,7 +33,8 @@ class AccountRepo implements Account
                 'alt_contact'=> $data['alt_contact'],
                 'personal_id'=> $data['personal_id'],
                 'valid_date'=> $data['valid_date'],
-                'gender'=> $data['gender']
+                'gender'=> $data['gender'],
+                'location'=> $data['location']
            ]);
 
            DB::commit();

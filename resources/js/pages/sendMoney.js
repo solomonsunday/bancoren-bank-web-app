@@ -30,11 +30,14 @@ $('#send-money').submit(function(e){
             
             if (data.status == 1) {
 
-                $('.alert').remove('alert-danger');
-                $('.alert').addClass('alert-success')
-                $('.alert').css('display', '')
-                $('.alert').html('Transaction Done Successfully')
+                // $('.alert').remove('alert-danger');
+                // $('.alert').addClass('alert-success')
+                // $('.alert').css('display', '')
+                // $('.alert').html('Transaction Done Successfully')
                 $('#send-money')[0].reset();
+                // redirect to another page
+                const url = data.data.intended_url;
+                redirectTo(url)
 
 
 

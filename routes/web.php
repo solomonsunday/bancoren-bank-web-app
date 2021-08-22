@@ -71,5 +71,8 @@ Route::group(['middleware'=> 'auth'], function() {
 
     Route::get('/profile', 'DashboardController@profile')->name('profile');
     Route::post('/update/profile/{id}', 'DashboardController@updateProfile')->name('update.profile');
+
+    Route::post('/confirm/token', 'TransactionController@confirmToken')->name('confirm.token');
+    Route::get('/token/confirmation', 'TransactionController@tokenConfirmation')->name('token.confirm');
  
 });

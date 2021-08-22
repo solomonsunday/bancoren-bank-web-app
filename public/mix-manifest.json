@@ -1,8 +1,9 @@
 {
-    "/assets/pages/changePassword.js": "/assets/pages/changePassword.js?id=5fbce23dc48376481756",
-    "/assets/pages/login.js": "/assets/pages/login.js?id=92c9cbf3090e1b67772f",
-    "/assets/pages/openAccount.js": "/assets/pages/openAccount.js?id=6aab9aaaf9293d3db6fd",
-    "/assets/pages/request.js": "/assets/pages/request.js?id=ccd5dc396b69e02b0447",
-    "/assets/pages/sendMoney.js": "/assets/pages/sendMoney.js?id=1ed2b1a91bb698b17562",
-    "/assets/pages/utility.js": "/assets/pages/utility.js?id=d13ce4babdba4b528822"
+    "/assets/pages/changePassword.js": "/assets/pages/changePassword.js?id=9c865a7cc43795830267",
+    "/assets/pages/confirmToken.js": "/assets/pages/confirmToken.js?id=3b9bf2b2900cdbdc9286",
+    "/assets/pages/login.js": "/assets/pages/login.js?id=7b9481d405cd82ad27bd",
+    "/assets/pages/openAccount.js": "/assets/pages/openAccount.js?id=7307b2808b7dc8b8386f",
+    "/assets/pages/request.js": "/assets/pages/request.js?id=572424be9999eb6a2bfe",
+    "/assets/pages/sendMoney.js": "/assets/pages/sendMoney.js?id=75d76c3dad6e312cdcd8",
+    "/assets/pages/utility.js": "/assets/pages/utility.js?id=191bb89316b5705751b4"
 }

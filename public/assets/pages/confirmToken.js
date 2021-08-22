@@ -81,32 +81,23 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 6);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/js/pages/sendMoney.js":
-/*!*****************************************!*\
-  !*** ./resources/js/pages/sendMoney.js ***!
-  \*****************************************/
+/***/ "./resources/js/pages/confirmToken.js":
+/*!********************************************!*\
+  !*** ./resources/js/pages/confirmToken.js ***!
+  \********************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-$('#transfer_type').on('change', function () {
-  var value = $(this).val();
-
-  if (value === "2") {
-    $('#option').css('display', '');
-  } else if (value === "1") {
-    $('#option').css('display', 'none');
-  }
-});
-$('#send-money').submit(function (e) {
+$('#change-token').submit(function (e) {
   e.preventDefault();
-  var formData = getFormAsJsonData('#send-money');
+  var formData = getFormAsJsonData('#change-token');
   var actionUrl = $(this).attr('action');
   $.ajax({
     url: actionUrl,
@@ -116,14 +107,16 @@ $('#send-money').submit(function (e) {
       toggleFullPageLoader(true, 'Submit');
     },
     success: function success(data, status, xhr) {
-      if (data.status == 1) {
-        // $('.alert').remove('alert-danger');
-        // $('.alert').addClass('alert-success')
-        // $('.alert').css('display', '')
-        // $('.alert').html('Transaction Done Successfully')
-        $('#send-money')[0].reset(); // redirect to another page
+      console.log(data.data);
 
+      if (data.status == 1) {
+        $('.alert').remove('alert-danger');
+        $('.alert').addClass('alert-success');
+        $('.alert').css('display', '');
+        $('.alert').html(data.message);
+        $('#change-token')[0].reset();
         var url = data.data.intended_url;
+        console.log(url);
         redirectTo(url);
       }
     },
@@ -131,7 +124,7 @@ $('#send-money').submit(function (e) {
       var data = jqXhr.responseJSON;
       var errors = data.errors || data.message || data.data || data;
 
-      if (data.message == "Unauthenticated") {
+      if (data.status == 401) {
         redirectTo('../');
       }
 
@@ -145,10 +138,11 @@ $('#send-money').submit(function (e) {
           selector.fadeIn();
         });
       } else {
-        $('.alert').remove('alert-success');
-        $('.alert').addClass('alert-danger');
-        $('.alert').css('display', '');
-        $('.alert').html(errors);
+        var selector = $('.alert');
+        selector.remove('alert-success');
+        selector.addClass('alert-danger');
+        selector.css('display', '');
+        selector.html(errors);
       }
     },
     complete: function complete() {
@@ -159,14 +153,14 @@ $('#send-money').submit(function (e) {
 
 /***/ }),
 
-/***/ 3:
-/*!***********************************************!*\
-  !*** multi ./resources/js/pages/sendMoney.js ***!
-  \***********************************************/
+/***/ 6:
+/*!**************************************************!*\
+  !*** multi ./resources/js/pages/confirmToken.js ***!
+  \**************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/mac/Documents/personal-works/solomon/user/bancoren-v2/resources/js/pages/sendMoney.js */"./resources/js/pages/sendMoney.js");
+module.exports = __webpack_require__(/*! /Users/mac/Documents/personal-works/solomon/user/bancoren-v2/resources/js/pages/confirmToken.js */"./resources/js/pages/confirmToken.js");
 
 
 /***/ })

@@ -157,7 +157,7 @@ $('#change-password').submit(function (e) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/itexecutive/Documents/bancoren-v2/resources/js/pages/changePassword.js */"./resources/js/pages/changePassword.js");
+module.exports = __webpack_require__(/*! /Users/mac/Documents/personal-works/solomon/user/bancoren-v2/resources/js/pages/changePassword.js */"./resources/js/pages/changePassword.js");
 
 
 /***/ })

@@ -38,9 +38,9 @@
                                                             </div>
                                                             <div class="panel panel-default">
                                                                 <div class="panel-heading">
-                                                                    <h4 class="check-title">
+                                                                    <h4 class="check-title" style="text-transform: lowercase;">
                                                                         <a>
-                                                                            <span></span>Email : {{$authuser->email}}
+                                                                            <span></span>Email : {{Str::lower($authuser->email)}}
                                                                         </a>
                                                                     </h4>
                                                                 </div>

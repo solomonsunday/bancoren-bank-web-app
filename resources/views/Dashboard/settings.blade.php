@@ -73,3 +73,4 @@
 @section('scripts')
     <script src="{{mix('/assets/pages/changePassword.js')}}"></script>
 @endsection
+

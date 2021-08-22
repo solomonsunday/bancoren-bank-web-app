@@ -55,8 +55,8 @@
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                                            <label for="m-send">Type Amount</label>
-                                                            <input type="number" value="0" id="amount" required>
+                                                            <label for="m-send">Amount</label>
+                                                            <input type="number" value="" id="amount" required>
                                                         </div>
 
                                                     <div class="col-md-6 col-sm-6 col-xs-12">

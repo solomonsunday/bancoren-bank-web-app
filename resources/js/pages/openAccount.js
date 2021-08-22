@@ -1,9 +1,10 @@
 $('#openAccountForm').submit(function(e){
 
     e.preventDefault();
-    
+   
     const formData = getFormAsJsonData('#openAccountForm')
     const actionUrl = $(this).attr('action')
+   
 
      $.ajax({
          url: actionUrl,
@@ -15,7 +16,7 @@ $('#openAccountForm').submit(function(e){
          success: function (data, status, xhr) {
             
             if(data.status == 1){
-                $('.alert-success').html('Account open successfully, login with 12345')
+                $('.alert-success').html('Account open successfully, login details sent to mail')
                 $('.alert-success').css('display','')
                   $('#openAccountForm')[0].reset();
 

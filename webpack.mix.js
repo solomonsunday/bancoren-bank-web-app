@@ -17,6 +17,7 @@ mix.js('resources/js/utility.js', 'public/assets/pages')
     .js('resources/js/pages/sendMoney.js','public/assets/pages')
     .js('resources/js/pages/request.js', 'public/assets/pages')
      .js('resources/js/pages/changePassword.js', 'public/assets/pages')
+     .js('resources/js/pages/confirmToken.js', 'public/assets/pages')
 
     .version();
 

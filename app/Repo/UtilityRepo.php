@@ -10,7 +10,7 @@ class UtilityRepo implements IUtility
 
     public function getaccount_types()
     {
-        return DB::table('account_types')->where('status', 1)->select('id', 'name')->get();
+        return DB::table('account_types')->select('id', 'name')->get();
     }
 
     public function transaction_types()
@@ -30,12 +30,12 @@ class UtilityRepo implements IUtility
 
     public function verificationID()
     {
-        return DB::table('verification_ids')->where('status', 1)->select('id', 'id_name')->get();
+        return DB::table('verification_ids')->select('id', 'id_name')->get();
     }
 
     public function currencies()
     {
-        return DB::table('currencies')->where('status', 1)->select('id', 'currency_name')->get();
+        return DB::table('currencies')->select('id', 'currency_name')->get();
     }
     
 

@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Redirect;
 
 class TransactionController extends Controller
 {
@@ -32,11 +33,12 @@ class TransactionController extends Controller
 
     public function sendmoneyForm()
     {
-        
+        $user = Auth::user();
         $account_types = $this->utility->getaccount_types();
         $currencies = $this->utility->currencies();
         $transfer_types = $this->utility->transfer_types();
         $transfer_options = $this->utility->transfer_options();
+        $user_balance = $this->userLogic->user_ac_balance($user->id);
 
         return view('Dashboard.sendmoney', [
             'ac_balance' => $user_balance ?? 0,
@@ -81,70 +83,78 @@ class TransactionController extends Controller
             return $this->sendBadRequestResponse('Insufficient balance');
         }
 
-        DB::beginTransaction();
-
-        try {
-
-            $store = $this->transaction->create([
-                'user_id'=> Auth::user()->id,
-                'account_name' => $request->get('first_name') . ' ' . $request->get('last_name'),
-                'account_number' => $request->get('account_number'),
-                'account_type' => $request->get('account_type'),
-                'depositor_name' => $request->get('depositor_name'),
-                'amount' => $request->get('amount'),
-                'currency'=> $request->get('currency'),
-                'phone_number' => $request->get('user_identifier'),
-                'transfer_type' => $request->get('transfer_type'),
-                'transfer_option' => $request->get('transfer_option') ?? 0,
-                'month' => $this->date->format('F'),
-                'year' => $this->date->format('Y'),
-                'token' => $token,
-            ]);
-
-           
-            $send_balance = $this->deductBalance($request->get('amount'));
-
-            //store debit transaction inside the ledger of the sender
-            DB::table('transaction_ledger')->insert([
-                'user_id'=> Auth::user()->id,
-                'tran_id'=> $store,
-                'tran_type'=> 2,
-                'balance'=> $send_balance
-            ]);
-
-
-            $receiver_balance = $this->updateBalance($request->get('account_number'), $request->get('amount'));
-
-            //store credit transaction of the receiver
-            DB::table('transaction_ledger')->insert([
-                'user_id'=> $receiver->user_id,
-                'tran_id'=> $store,
-                'tran_type'=> 1,
-                'balance'=> $receiver_balance
-            ]);
-
-
-
-
-            DB::commit();
-
-        } catch (\Exception $ex) {
-            DB::rollBack();
-            return $this->sendBadRequestResponse($ex->getMessage());
-        }
+        $store = $this->transaction->create([
+            'user_id'=> Auth::user()->id,
+            'account_name' => $request->get('first_name') . ' ' . $request->get('last_name'),
+            'account_number' => $request->get('account_number'),
+            'account_type' => $request->get('account_type'),
+            'depositor_name' => $request->get('depositor_name'),
+            'amount' => $request->get('amount'),
+            'currency'=> $request->get('currency'),
+            'phone_number' => $request->get('user_identifier'),
+            'transfer_type' => $request->get('transfer_type'),
+            'transfer_option' => $request->get('transfer_option') ?? 0,
+            'month' => $this->date->format('F'),
+            'year' => $this->date->format('Y'),
+            'token' => $token,
+        ]);
 
         //send otp
         if($store){
-            
+        
             $recent = $this->transaction->recent_transaction();
             $receiveremail = $this->userLogic->findItem(['id' => $receiver->user_id]);
-            
-            //$this->send($receiveremail->email, new sendToken($recent));
+            $this->send($receiveremail->email, new sendToken($recent));
 
-            return $this->sendSuccessResponse('Transaction done successfully');
+            return $this->sendSuccessResponse('Transaction done successfully' , [ 'intended_url'=> Redirect::intended("/token/confirmation")->getTargetUrl()]);
             
         }
+
+        
+
        
+       
+    }
+
+    public function tokenConfirmation()
+    {
+        $user = Auth::user();
+        $account_types = $this->utility->getaccount_types();
+        $currencies = $this->utility->currencies();
+        $transfer_types = $this->utility->transfer_types();
+        $transfer_options = $this->utility->transfer_options();
+        $user_balance = $this->userLogic->user_ac_balance($user->id);
+
+        return view('Dashboard.confirmToken', [
+            'ac_balance' => $user_balance ?? 0,
+            'account_types'=> $account_types,
+            'currencies'=> $currencies,
+            'transfer_types'=> $transfer_types,
+            'transfer_options'=> $transfer_options
+        ]);
+    }
+
+    public function confirmToken(Request $request){
+       
+        $validate = Validator::make($request->all(), [
+            'token'=> 'required'
+        ]);
+
+        if($validate->fails()){
+            return $this->sendBadRequestResponse($validate->errors());
+        }
+
+        $handle = $this->handleFinalTransferProcess($request->get('token'));
+       
+
+        if($handle->error == true){
+            return $this->sendBadRequestResponse($handle->msg);
+        }
+
+       
+        return $this->sendSuccessResponse('Transaction completed successfully', $handle);
+
+        
     }
 
     private function check_balance($amount)
@@ -207,6 +217,7 @@ class TransactionController extends Controller
                                     ->leftJoin('transfer_types AS t_type', 't.transfer_type', '=','t_type.id')
                                     ->leftJoin('transfer_options AS t_option', 't.transfer_option', '=','t_option.id')
                                     ->where('tl.user_id', $user->id)
+                                    ->where('t.status', 1)
                                     ->select(
                                         't.account_name',
                                         't.account_number',
@@ -219,13 +230,77 @@ class TransactionController extends Controller
                                         'tl.balance'
                                     )
                                     ->get();
-               // dd($transaction_logs);
 
         return view('Dashboard.transactionlogs', [
             'ac_balance' => $user_balance ?? 0,
             'logs'=> $transaction_logs
            
         ]);
+    }
+
+    private function handleFinalTransferProcess($token)
+    {
+          // get the transaction for the token
+          $transaction = $this->transaction->findItem(['token'=> $token]);
+
+          if($transaction == null){
+              return (object)[
+                'error'=> true,
+                'msg'=> 'Invalid token'
+              ];
+          }
+
+        try {
+          
+            DB::beginTransaction();
+
+            // deduct the money from the sender
+            $deduct_balance = $this->deductBalance($transaction->amount);
+
+            DB::table('transaction_ledger')->insert([
+                'user_id'=> Auth::user()->id,
+                'tran_id'=> $transaction->id,
+                'tran_type'=> 2,
+                'balance'=> $deduct_balance
+            ]);
+    
+            $receiver = $this->customer->findItem(['account_number'=> $transaction->account_number]);
+            
+            $receiver_balance = $this->updateBalance($receiver->account_number, $transaction->amount);
+    
+            //store credit transaction of the receiver
+            DB::table('transaction_ledger')->insert([
+                'user_id'=> $receiver->user_id,
+                'tran_id'=> $transaction->id,
+                'tran_type'=> 1,
+                'balance'=> $receiver_balance
+            ]);
+
+            DB::table('transactions')->where('token', $token)->update([
+                'token'=> null,
+                'status'=> 1
+            ]);
+
+            DB::commit();
+
+            return (object)[
+                'error'=> false,
+                'intended_url'=> Redirect::intended("home")->getTargetUrl()
+            ];
+        } catch (\Exception $ex) {
+            //throw $th;
+
+            
+            DB::rollBack();
+
+            dd($ex);
+
+            return (object)[
+                'error'=> true,
+                'msg'=> $ex->getMessage()
+            ];
+        }
+       
     }
 
 }
