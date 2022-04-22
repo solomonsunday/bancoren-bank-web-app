@@ -71,6 +71,6 @@
 @endsection
 
 @section('scripts')
-    <script src="{{mix('/assets/pages/changePassword.js')}}"></script>
+    <script src="{{URL::to('/assets/pages/changePassword.js?')}}"></script>
 @endsection
 

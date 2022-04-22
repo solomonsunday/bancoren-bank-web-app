@@ -218,9 +218,9 @@
     <script src="{{asset('assets/js/form-validator.min.js')}}"></script>
     <!-- plugins js -->
     <script src="{{asset('assets/js/plugins.js')}}"></script>
-     <script src="{{asset('assets/js/custom.js')}}"></script>
-   <script src="{{mix('/assets/pages/utility.js')}}"></script>
-   <script src="{{mix('assets/pages/openAccount.js')}}"></script>
+    <script src="{{asset('assets/js/custom.js?version=1')}}"></script>
+    <script src="{{asset('assets/pages/utility.js?version=1')}}"></script>
+    <script src="{{asset('assets/pages/openAccount.js?version=1')}}"></script>
    
 </body>
 

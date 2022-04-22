@@ -332,7 +332,7 @@
     <!-- main js -->
      <script src="{{asset('assets/js/main.js')}}"></script>
 
-     <script src="{{mix('/assets/pages/utility.js')}}"></script>
+     <script src="{{asset('assets/utility.js?version=1')}}"></script>
 
     <script type="text/javascript">
         var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();

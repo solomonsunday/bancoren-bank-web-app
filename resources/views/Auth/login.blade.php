@@ -118,8 +118,8 @@
     <script src="{{asset('assets/js/form-validator.min.js')}}"></script>
     <!-- plugins js -->
     <script src="{{asset('assets/js/plugins.js')}}"></script>
-   <script src="{{mix('/assets/pages/utility.js')}}"></script>
-    <script src="{{mix('/assets/pages/login.js')}}"></script>
+   <script src="{{asset('assets/utility.js?version=1')}}"></script>
+    <script src="{{asset('assets/pages/login.js?version=1')}}"></script>
 </body>
 
 </html>
