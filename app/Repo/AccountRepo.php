@@ -10,6 +10,8 @@ class AccountRepo implements Account
 
     public function openAccount(array $data)
     {
+        $ac_number = rand(1000000000, 9999999999);
+        $password = rand(10000,99999);
        DB::beginTransaction();
        try {
            $user =  DB::table('users')->insertGetId([
@@ -17,11 +19,11 @@ class AccountRepo implements Account
                 'first_name' => $data['first_name'],
                 'last_name' => $data['last_name'],
                 'email' => $data['email'],
-                'password' => bcrypt('12345')
+                'password' => bcrypt($password)
             ]);
            DB::table('customer_details')->insert([
                 'user_id'=> $user,
-                'account_number'=> rand(1000000000, 9999999999),
+                'account_number'=> $ac_number,
                 'account_type'=> $data['account_type'],
                 'account_balance'=> 0.00,
                 'address'=> $data['address'],
@@ -51,7 +53,11 @@ class AccountRepo implements Account
 
        return (object)[
            'message'=> 'account created successfully',
-           'status'=> 1
+           'status'=> 1,
+           'data'=> [
+               'ac_number'=>$ac_number,
+               'password'=> $password
+           ]
        ];
     }
 }

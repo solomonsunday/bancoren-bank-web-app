@@ -18,14 +18,14 @@
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="send-money-form transection-log">
                                     <div class="form-text">
-                                        <h4 class="form-top">Transection Log</h4>
+                                        <h4 class="form-top">Transaction Log</h4>
                                         <div class="form-inner table-inner">
                                             <table>
                                                 <thead>
                                                     <tr>
                                                         <th>Date</th>
                                                         <th>Transaction details</th>
-                                                        <th>Type</th>
+                                                        {{-- <th>Type</th> --}}
                                                         <th>Account number</th>
                                                         <th>Amount</th>
                                                         <th>Account Balance</th>
@@ -36,7 +36,7 @@
                                                     <tr>
                                                           <td>{{$transaction->created_at}}</td>
                                                         <td>{{$transaction->account_name}}</td>
-                                                        <td>{{$transaction->type_name}}</td>
+                                                        {{-- <td>{{$transaction->type_name}}</td> --}}
                                                         <td>{{$transaction->account_number}}</td>
                                                         
                                                         <td>{{$transaction->amount}}</td>

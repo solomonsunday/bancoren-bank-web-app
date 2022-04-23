@@ -8,7 +8,9 @@
 </head>
 <body>
     
-    <h4>Welcome <b>{{ $name }}</b>, Your can login with 12345</h4>
+    <h4>Welcome <b>{{ $name }}</b></h4>
+    <h4>Account Number <b>{{$ac_number}} </b></h4>
+    <h4>Your can login with <b>{{$password}}</b></h4>
     <br>
 
     <br>

@@ -16,9 +16,11 @@ class WelcomeNotification extends Mailable
      *
      * @return void
      */
-    public function __construct($name)
+    public function __construct($name, $ac_number,$password)
     {
         $this->data = $name;
+        $this->ac_number = $ac_number;
+        $this->password = $password;
        
     }
 
@@ -30,6 +32,6 @@ class WelcomeNotification extends Mailable
     public function build()
     {
         return $this->view('Emails.welcomeNotification')
-                            ->with('name', $this->data);
+                            ->with(['name'=>$this->data,'ac_number'=> $this->ac_number, 'password'=>$this->password]);
     }
 }

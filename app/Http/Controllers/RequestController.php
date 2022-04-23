@@ -57,6 +57,7 @@ class RequestController extends Controller
 
         $user = Auth::user();
         $request_type = DB::table('request_types')->where('id', $request->get('request'))->first();
+        $customer_details = DB::table('customer_details')->where("user_id", $user->id)->first();
 
         $store = $this->makeRequest->create([
             'user_id'=> $user->id,
@@ -64,7 +65,8 @@ class RequestController extends Controller
             'request_type'=> $request->get('request'),
             'phone'=> $request->get('phone'),
             'location'=> $request->get('address'),
-            'email'=> $request->get('email')
+            'email'=> $request->get('email'),
+            'account_number'=> $customer_details->account_number
         ]);
 
         

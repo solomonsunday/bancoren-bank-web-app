@@ -17,9 +17,10 @@ class sendToken extends Mailable
      *
      * @return void
      */
-    public function __construct($viewdata)
+    public function __construct($account_name, $token)
     {
-        $this->data = $viewdata;
+        $this->account = $account_name;
+        $this->token = $token;
        
     }
 

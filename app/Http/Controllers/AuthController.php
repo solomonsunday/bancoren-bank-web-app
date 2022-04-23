@@ -147,12 +147,16 @@ class AuthController extends Controller
        if($store->status != 1){
             return $this->sendBadRequestResponse($store->message);
        }
-
+       
        // send mail 
        $name = $request->get('first_name'). ' '. $request->get('last_name');
 
-       $this->send($request->get('email'), new WelcomeNotification($name));
+       $this->send($request->get('email'), new WelcomeNotification($name, $store->data['ac_number'], $store->data['password']));
 
-       return $this->sendSuccessResponse($store->message);
+       $intended_url = Redirect::intended("login")->getTargetUrl();
+
+       return $this->sendSuccessResponse($store->message, [
+        "intended_url" => $intended_url
+       ]);
     }
 }

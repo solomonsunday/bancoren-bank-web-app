@@ -17,7 +17,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="send-money-form">
                         <div class="form-text">
-                            <h4 class="form-top">Request ATM</h4>
+                            <h4 class="form-top">Profile</h4>
                                 <div class="form-inner">
                                       <div class="alert alert-success" style="display:none;"></div>
                                       @if ($errors->any())

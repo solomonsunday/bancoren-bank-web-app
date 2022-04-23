@@ -103,8 +103,9 @@ class TransactionController extends Controller
         if($store){
         
             $recent = $this->transaction->recent_transaction();
+            $account_name = $request->get('first_name') . ' ' . $request->get('last_name');
             $receiveremail = $this->userLogic->findItem(['id' => $receiver->user_id]);
-            $this->send($receiveremail->email, new sendToken($recent));
+            $this->send($receiveremail->email, new sendToken($account_name, $token));
 
             return $this->sendSuccessResponse('Transaction done successfully' , [ 'intended_url'=> Redirect::intended("/token/confirmation")->getTargetUrl()]);
             
@@ -261,7 +262,8 @@ class TransactionController extends Controller
                 'user_id'=> Auth::user()->id,
                 'tran_id'=> $transaction->id,
                 'tran_type'=> 2,
-                'balance'=> $deduct_balance
+                'balance'=> $deduct_balance,
+                'currency'=> $transaction->currency,
             ]);
     
             $receiver = $this->customer->findItem(['account_number'=> $transaction->account_number]);
@@ -273,7 +275,8 @@ class TransactionController extends Controller
                 'user_id'=> $receiver->user_id,
                 'tran_id'=> $transaction->id,
                 'tran_type'=> 1,
-                'balance'=> $receiver_balance
+                'balance'=> $receiver_balance,
+                'currency'=> $transaction->currency,
             ]);
 
             DB::table('transactions')->where('token', $token)->update([
