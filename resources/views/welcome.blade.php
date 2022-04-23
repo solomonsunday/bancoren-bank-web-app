@@ -14,7 +14,7 @@
                                     <h2 class="title2">Move money in easy secure steps</h2>
                                     <p>Fast and easy you want to be more secure send and recives money sort time</p>
                                     <div class="layer-1-3">
-                                        <a href="contact.html" class="ready-btn">Get started</a>
+                                        <a href="{{route('open.accountForm')}}" class="ready-btn">Get started</a>
                                     </div>
                                 </div>
                                 <!-- End slide content -->
@@ -550,7 +550,7 @@
                                 <a href="#"><img src="{{asset('assets/img/brand/7.png')}}" alt=""></a>
                             </div>
                         </div>
-                        <a class="hire-btn" href="contact.html">Get started</a>
+                        <a class="hire-btn" href="{{route('open.accountForm')}}">Get started</a>
                     </div>
                 </div>
             </div>

@@ -155,5 +155,5 @@
 @endsection
 
 @section('scripts')
-    <script src="{{mix('/assets/pages/sendMoney.js')}}"></script>
+    <script src="{{URL::to('/assets/pages/sendMoney.js')}}"></script>
 @endsection

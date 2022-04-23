@@ -72,5 +72,5 @@
 @endsection
 
 @section('scripts')
-    <script src="{{mix('/assets/pages/request.js')}}"></script>
+    <script src="{{URL::to('/assets/pages/request.js?version=1')}}"></script>
 @endsection
