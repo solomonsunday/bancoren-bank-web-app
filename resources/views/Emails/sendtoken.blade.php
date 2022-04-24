@@ -8,7 +8,7 @@
 </head>
 <body>
     
-    <h4>Dear <b>{{ $data->account_name }}</b>, Your Transcation code is {{ $data->token }}</h4>
+    <h4>Dear <b>{{ $account_name }}</b>, Your Transcation code is {{ $token }}</h4>
     <br>
     <br>
     <br>

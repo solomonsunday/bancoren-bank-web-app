@@ -232,6 +232,8 @@ class TransactionController extends Controller
                                     )
                                     ->get();
 
+                                  
+
         return view('Dashboard.transactionlogs', [
             'ac_balance' => $user_balance ?? 0,
             'logs'=> $transaction_logs

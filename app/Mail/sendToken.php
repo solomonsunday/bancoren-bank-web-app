@@ -31,6 +31,6 @@ class sendToken extends Mailable
      */
     public function build()
     {
-        return $this->view('Emails.sendtoken');
+        return $this->view('Emails.sendtoken')->with(['account_name'=> $this->account, 'token'=> $this->token]);
     }
 }
