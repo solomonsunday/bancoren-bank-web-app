@@ -68,6 +68,7 @@ class TransactionController extends Controller
             return $this->sendBadRequestResponse($validate->errors());
         }
 
+        $user = Auth::user();
         $token = str_shuffle(mt_rand(1000, 9999));
 
         $receiver = $this->customer->findItem(['account_number'=> $request->get('account_number')]);
@@ -103,9 +104,9 @@ class TransactionController extends Controller
         if($store){
         
             $recent = $this->transaction->recent_transaction();
-            $account_name = $request->get('first_name') . ' ' . $request->get('last_name');
+            $account_name = $user->first_name . ' ' . $user->last_name;
             $receiveremail = $this->userLogic->findItem(['id' => $receiver->user_id]);
-            $this->send($receiveremail->email, new sendToken($account_name, $token));
+            $this->send($user->email, new sendToken($account_name, $token));
 
             return $this->sendSuccessResponse('Transaction done successfully' , [ 'intended_url'=> Redirect::intended("/token/confirmation")->getTargetUrl()]);
             
