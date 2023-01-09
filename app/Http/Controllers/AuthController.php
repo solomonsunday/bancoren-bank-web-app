@@ -151,8 +151,12 @@ class AuthController extends Controller
        // send mail 
        $name = $request->get('first_name'). ' '. $request->get('last_name');
 
-       $this->send($request->get('email'), new WelcomeNotification($name, $store->data['ac_number'], $store->data['password']));
-
+       try{
+        $this->send($request->get('email'), new WelcomeNotification($name, $store->data['ac_number'], $store->data['password']));
+       } catch (Exception $e) {
+            
+       }
+       //
        $intended_url = Redirect::intended("login")->getTargetUrl();
 
        return $this->sendSuccessResponse($store->message, [

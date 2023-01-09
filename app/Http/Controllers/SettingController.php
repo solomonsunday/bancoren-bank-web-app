@@ -92,9 +92,18 @@ class SettingController extends Controller
         $validate = Validator::make($request->all(), [
             'image'=> 'required|image|mimes:png,jpg,jpeg'
         ]);
+        //
+        // $request->validate([
+        //     'image'=> 'required|image|mimes:png,jpg,jpeg'
+        // ]);
 
-        if($validate->fails()){
-            return $this->sendBadRequestResponse($validate->errors());
+        // if($validate->fails()){
+        //     return $this->sendBadRequestResponse($validate->errors());
+        // }
+
+        if ($validate->fails()) {
+            $error = $validate->messages()->first();
+            return back()->with('danger', $error);
         }
 
         $filename = time() . '.' . $request->image->getClientOriginalName();

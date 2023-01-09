@@ -233,8 +233,8 @@
                                 <div class="single-dash-head">
                                     <div class="dashboard-amount">
                                         <div class="amount-content">
-                                            <a class="edit-icon" href="{{route('account.details')}}"><i
-                                                    class="ti-pencil-alt"></i></a>
+                                            <a class="edit-icon" href="{{route('account.details')}}"><i style="font-size: 25px"
+                                                    class="ti-eye"></i></a>
                                             <i class="flaticon-043-bank-2"></i>
                                             <span class="pro-name">Account Details</span>
                                         </div>
@@ -269,7 +269,7 @@
                                 <li class="{{Request::segment(1)=="home" ? "active":"" }} "><a href="{{route('home')}}"><i class="ti-dashboard"></i>Dashboard</a></li>
                                 <li  class="{{Request::segment(1)=="send-money" ? "active":"" }} "><a href="{{route('send.moneyForm')}}"><i class="ti-credit-card"></i>Send Money</a></li>
                                 <li class="{{Request::segment(1)=="make-request" ? "active":"" }} "><a href="{{route('request.form')}}"><i class="ti-receipt"></i>Make Request</a></li>
-                                <li class="{{Request::segment(1)=="account-details" ? "active":"" }} "><a href="{{route('account.details')}}"><i class="ti-wallet"></i>Account Details</a></li>
+                                <li class="{{Request::segment(1)=="account-details" ? "active":"" }} "><a href="{{route('account.details')}}"><i class="ti-eye"></i>Account Details</a></li>
                                  <li class="{{Request::segment(1)=="transactions" ? "active":"" }} "><a href="{{route('transaction.logs')}}"><i class="ti-layout-list-thumb"></i>Transactions Log</a></li>
                                 <li class="{{Request::segment(1)=="settings" ? "active":"" }} "><a href="{{route('settings')}}"><i class="ti-settings"></i>Settings</a></li>
                             </ul>
